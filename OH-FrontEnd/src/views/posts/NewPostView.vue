@@ -1,0 +1,76 @@
+<script>
+import axios from "axios";
+import Swal from "sweetalert2";
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const fr = ref({
+      image: "",
+      body: "",
+      user_id: localStorage.getItem("user_id"),
+    });
+
+    function onFileChange(event) {
+      fr.value.image = event.target.files[0];
+    }
+    function store() {
+      const formData = new FormData();
+      formData.append("image", fr.value.image);
+      formData.append("body", fr.value.body);
+      formData.append("user_id", fr.value.user_id);
+
+      axios
+        .post("http://127.0.0.1:8000/api/posts", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+
+    return { fr, onFileChange, store };
+  },
+};
+</script>
+
+<template>
+  <div
+    class="md:w-1/2 w-auto md:mx-auto mx-4 grid gap-8 mt-20 rounded shadow-md md:py-10 py-4 md:px-6 px-2"
+  >
+    <h1 class="text-2xl font-bold">Publish a new post</h1>
+    <div class="grid gap-4">
+      <div class="grid gap-1">
+        <label>Image</label>
+        <input
+          name="image"
+          class="py-3 pl-3 rounded border-2 border-orange-500"
+          type="file"
+          @change="onFileChange"
+        />
+      </div>
+      <div class="grid gap-1">
+        <label>Body</label>
+        <textarea
+          class="py-3 pl-3 rounded border-2 border-orange-500"
+          placeholder="What are thinking of..."
+          name="body"
+          cols="15"
+          rows="6"
+          v-model="fr.body"
+        ></textarea>
+      </div>
+      <button
+        @click="store()"
+        class="py-3 px-6 bg-orange-500 hover:bg-orange-600 font-bold text-gray-100 rounded justify-self-start"
+      >
+        Publish
+      </button>
+    </div>
+  </div>
+</template>
