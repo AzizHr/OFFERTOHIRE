@@ -40,7 +40,7 @@ class PostController extends Controller
         if (!Post::where('id', $id)->exists()) {
             return response()->json('No post found');
         }
-        return response()->json(Post::with(['user', 'likes'])->find($id));
+        return response()->json(Post::with(['user', 'likes' , 'likes.user'])->find($id));
     }
 
     /**

@@ -6,11 +6,13 @@ import PostsView from "../views/posts/PostsView.vue";
 import OffersView from "../views/offers/OffersView.vue";
 import SignInView from "../views/SignInView.vue";
 import UserSignUpView from "../views/user/UserSignUpView.vue";
+import ProfileView from "../views/user/ProfileView.vue";
 import CompanySignUpView from "../views/company/CompanySignUpView.vue";
 import PostDetailsView from "../views/posts/PostDetailsView.vue";
 import NewPostView from "../views/posts/NewPostView.vue";
 import NewOfferView from "../views/offers/NewOfferView.vue";
-import NotFound from '@/components/NotFound.vue'
+import ChatView from "../views/ChatView.vue";
+import NotFound from "@/components/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +31,16 @@ const router = createRouter({
       path: "/contact",
       name: "contact",
       component: ContactView,
+    },
+    {
+      path: "/chat/:id",
+      name: "chat",
+      component: ChatView,
+    },
+    {
+      path: "/users/:id/profile",
+      name: "profile",
+      component: ProfileView,
     },
     {
       path: "/posts",
@@ -74,7 +86,7 @@ const router = createRouter({
       component: CompanySignUpView,
     },
     {
-      path: '/:pathMatch(.*)*',
+      path: "/:pathMatch(.*)*",
       name: "notfound",
       component: NotFound,
     },

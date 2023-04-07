@@ -27,11 +27,13 @@ Route::get('/offers/search/{description}', [OfferController::class, 'search']);
 Route::post('/offers/like', [OfferController::class, 'like']);
 
 // Users
-// Route::post('/register', [UserController::class, 'register']);
-// Route::post('/login', [UserController::class, 'login']);
-// Route::post('/messages/send', [UserController::class, 'send']);
-// Route::post('/users/follow', [UserController::class, 'follow']);
-// Route::post('/users/apply', [UserController::class, 'apply']);
-Route::get('/users/messages/{user_id}', [UserController::class, 'messages']);
-// Route::get('/users/follows/{user_id}', [UserController::class, 'follows']);
-// Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/messages/send', [UserController::class, 'send']);
+Route::post('/users/follow', [UserController::class, 'follow']);
+Route::post('/users/apply', [UserController::class, 'apply']);
+Route::post('/users/messages/{message_from}', [UserController::class, 'messages']);
+// Route::get('/users/messages/{id}', [UserController::class, 'messages']);
+Route::get('/users/follows/{user_id}', [UserController::class, 'follows']);
+Route::get('/users/{user_id}', [UserController::class, 'show']);
+Route::post('/logout', [UserController::class, 'logout']);

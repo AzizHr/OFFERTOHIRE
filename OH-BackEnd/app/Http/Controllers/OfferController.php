@@ -39,7 +39,7 @@ class OfferController extends Controller
         if (!Offer::where('id', $id)->exists()) {
             return response()->json('No offer found');
         }
-        return response()->json(Offer::find($id));
+        return response()->json(Offer::with(['user', 'likes' , 'likes.user'])->find($id));
     }
 
     /**

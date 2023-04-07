@@ -18,18 +18,24 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
+            'role' => 'required',
             'password' => 'required|confirmed',
         ]);
 
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
+            'role' => $validatedData['role'],
             'password' => Hash::make($validatedData['password']),
         ]);
 
         return response()->json('Registration Success');
     }
 
+    public function show($user_id)
+    {
+        return response()->json(User::with('skills')->find($user_id));
+    }
 
     public function login(Request $request)
     {
@@ -53,10 +59,28 @@ class UserController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function messages($user_id)
+    public function userInfo($user_id)
     {
         return response()->json(User::with('sent', 'received.sender')->where('id', $user_id)->get());
     }
+
+    public function messages(Request $request, $message_from)
+    {
+        $user1 = User::find($message_from);
+        $user2 = User::find($request->message_to);
+
+        $messages = Message::where(function ($query) use ($user1, $user2) {
+            $query->where('message_from', $user1->id)->where('message_to', $user2->id);
+        })
+            ->orWhere(function ($query) use ($user1, $user2) {
+                $query->where('message_from', $user2->id)->where('message_to', $user1->id);
+            })
+            ->with('sender')
+            ->get();
+
+        return response()->json($messages);
+    }
+
 
     public function follows($user_id)
     {

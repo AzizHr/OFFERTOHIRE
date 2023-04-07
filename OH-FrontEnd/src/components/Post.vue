@@ -1,22 +1,28 @@
 <script>
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import axios from "axios";
 import router from "../router";
+import { useAuthStore } from "@/stores/auth";
 export default {
   props: ["posts"],
 
   setup() {
-    const client = ref(null);
+    const authStore = useAuthStore();
+    const user = ref(null);
 
-    onMounted(() => {
-      const loggedInUser = localStorage.getItem("loggedInUser");
-      const loggedInCompany = localStorage.getItem("loggedInCompany");
-      if (loggedInUser) {
-        client.value = JSON.parse(loggedInUser);
-      } else if (loggedInCompany) {
-        client.value = JSON.parse(loggedInCompany);
-      }
+    onBeforeMount(() => {
+      user.value = authStore.user;
     });
+
+    // onMounted(() => {
+    //   const loggedInUser = localStorage.getItem("loggedInUser");
+    //   const loggedInCompany = localStorage.getItem("loggedInCompany");
+    //   if (loggedInUser) {
+    //     client.value = JSON.parse(loggedInUser);
+    //   } else if (loggedInCompany) {
+    //     client.value = JSON.parse(loggedInCompany);
+    //   }
+    // });
 
     function like(post_id, user_id) {
       let fr = new FormData();
@@ -26,11 +32,11 @@ export default {
         .post("http://127.0.0.1:8000/api/posts/like", fr)
         .then((response) => {
           console.log(response.data);
-          router.replace("/posts");
+          router.push("/posts");
         });
     }
 
-    return { client, like };
+    return { like };
   },
 };
 </script>
@@ -51,11 +57,19 @@ export default {
       </div>
       <button
         class="text-gray-500 text-xl flex justify-center items-center"
-        @click="like(post.id, client.id)"
+        @click="like(post.id, 100)"
       >
         {{ post.likes_count }}
 
         <lord-icon
+          v-if="post.likes.some((like) => like.user.id === 100)"
+          src="https://cdn.lordicon.com/xryjrepg.json"
+          trigger="click"
+          colors="primary:#e83a30"
+          style="width: 42px; height: 42px"
+        ></lord-icon>
+        <lord-icon
+          v-else
           src="https://cdn.lordicon.com/xryjrepg.json"
           trigger="click"
           colors="primary:#e4e4e4"

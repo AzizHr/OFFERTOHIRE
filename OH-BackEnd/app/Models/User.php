@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
     ];
 
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function following()
     {
         return $this->hasMany(Follow::class, 'followed_by', 'id');
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
     }
 }

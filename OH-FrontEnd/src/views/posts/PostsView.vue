@@ -1,7 +1,8 @@
 <script>
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import Post from "../../components/Post.vue";
 import getPosts from "../../composables/getPosts";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   components: {
@@ -10,24 +11,23 @@ export default {
 
   setup() {
     const { posts, load } = getPosts();
+    const authStore = useAuthStore();
     const user = ref(null);
-    const company = ref(null);
 
-    onMounted(() => {
-      // Get the user information from localStorage if available
-      const loggedInUser = localStorage.getItem("loggedInUser");
-      const loggedInCompany = localStorage.getItem("loggedInCompany");
-      if (loggedInUser) {
-        user.value = JSON.parse(loggedInUser);
-      }
-      if (loggedInCompany) {
-        user.value = JSON.parse(loggedInCompany);
-      }
+    onBeforeMount(() => {
+      user.value = authStore.user;
     });
 
     load();
 
-    return { posts, user, company };
+    watch(
+      () => load(),
+      () => {
+        getPosts();
+      }
+    );
+
+    return { posts, user };
   },
 };
 </script>

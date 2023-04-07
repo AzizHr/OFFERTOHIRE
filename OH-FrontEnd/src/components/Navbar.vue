@@ -1,27 +1,36 @@
 <script>
 import router from "../router";
 import { useAuthStore } from "@/stores/auth";
+import axios from "axios";
+import { onBeforeMount, ref } from "vue";
+
 export default {
   name: "Navbar",
 
   setup() {
+    const authStore = useAuthStore();
+    const user = ref(null);
 
-    const user = useAuthStore().user
+    onBeforeMount(() => {
+      user.value = authStore.user;
+    });
 
     const toggle = () => {
       document.getElementById("menu").classList.toggle("hidden");
     };
 
     function logout() {
-      axios
-        .post("http://127.0.0.1:8000/api/logout")
-        .then(() => {
-          useAuthStore().clearUser();
-          router.push("/sign-in");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      authStore.clearUser();
+      // router.push("/sign-in");
+      // axios
+      //   .post("http://127.0.0.1:8000/api/logout")
+      //   .then(() => {
+      //     authStore.clearUser();
+      //     router.push("/sign-in");
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     }
 
     return { toggle, user, logout };
@@ -81,7 +90,10 @@ export default {
     </ul>
   </nav>
 
-  <nav v-if="user && user.role == 'user'" class="flex justify-between py-6 justify-center">
+  <nav
+    v-if="user && user.role == 'user'"
+    class="flex justify-between py-6 justify-center"
+  >
     <div class="flex justify-center">
       <h1 class="font-bold text-xl pl-4 md:pt-2 h-fit">OFFER->HIRE</h1>
     </div>

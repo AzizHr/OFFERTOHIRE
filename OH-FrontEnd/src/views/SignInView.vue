@@ -3,58 +3,40 @@ import { ref } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 import router from "../router";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   setup() {
     const email = ref("");
     const password = ref("");
 
-    const user = ref(null);
-
     async function auth() {
-      if (email.value == "" && password.value == "") {
+      let userData = {
+        email: email.value,
+        password: password.value,
+      };
+      if (userData.email == "" && userData.password == "") {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Please Fill in all inputs!",
         });
       } else {
-        let fr = new FormData();
-        fr.append("email", email.value);
-        fr.append("password", password.value);
         axios
-          .post("http://127.0.0.1:8000/api/login", fr)
+          .post("http://127.0.0.1:8000/api/login", userData)
           .then((response) => {
-            if (response.data.role == "user") {
-              user.value = response.data;
-              // useAuthStore.setUser(user);
-              router.push("/posts");
-            } else if (response.data.role == "company") {
-              user.value = response.data;
-              // useAuthStore.setUser(user);
-              router.push("/offers");
-            } else if (response.data.role == "admin") {
-              user.value = response.data;
-              // useAuthStore.setUser(user);
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Email or Password incorrect!",
-              });
-            }
+            console.log(response.data);
+            const authStore = useAuthStore();
+            authStore.setUser(response.data);
+            router.push("/posts");
           })
-          .catch(() => {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Email or Password incorrect!",
-            });
+          .catch((error) => {
+            console.log(error);
           });
       }
     }
 
-    return { email, password, auth, user };
+    return { email, password, auth };
   },
 };
 </script>
@@ -89,7 +71,6 @@ export default {
       </div>
       <div class="flex justify-between items-center">
         <button
-          @click="auth()"
           class="py-3 px-6 bg-orange-500 hover:bg-orange-600 font-bold text-gray-100 rounded"
         >
           Sign in
