@@ -21,6 +21,13 @@ class OfferController extends Controller
         return response()->json(Offer::with(['company', 'likes', 'likes.user'])->find($id));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $offers = Offer::with('company', 'likes', 'likes.user')->where('content', 'like', '%' . $search . '%')->get();
+        return response()->json($offers);
+    }
 
     public function store(Request $request)
     {
@@ -32,7 +39,7 @@ class OfferController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $path = 'C:/xampp/htdocs/OTH/OTH-UI/src/assets/offers';
+            $path = 'C:/xampp/htdocs/OFFERTOHIRE/OTH-UI/src/assets/offers';
             $filename = $image->getClientOriginalName();
             $image->move($path, $filename);
             $data['image'] = $filename;
@@ -58,5 +65,12 @@ class OfferController extends Controller
             OfferLike::create($data);
             return response()->json('Liked!');
         }
+    }
+
+    public function destroy($id)
+    {
+        $offer = Offer::where('id' , $id);
+        $offer->delete();
+        return response()->json('Offer deleted successfully');
     }
 }

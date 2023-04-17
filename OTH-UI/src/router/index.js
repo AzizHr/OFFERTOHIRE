@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
-import ContactView from "../views/ContactView.vue";
 import PostsView from "../views/posts/PostsView.vue";
 import OffersView from "../views/offers/OffersView.vue";
 import SignInView from "../views/SignInView.vue";
@@ -13,12 +11,16 @@ import NewPostView from "../views/posts/NewPostView.vue";
 import NewOfferView from "../views/offers/NewOfferView.vue";
 import NewSkillView from "../views/user/NewSkillView.vue";
 import MyApplicationsView from "../views/user/MyApplicationsView.vue";
+import Users from "../views/admin/Users.vue";
+import Posts from "../views/admin/Posts.vue";
+import Offers from "../views/admin/Offers.vue";
 import NewApplicationView from "../views/user/NewApplicationView.vue";
 import PortfolioView from "../views/user/PortfolioView.vue";
 import ChatView from "../views/ChatView.vue";
 import NotFound from "@/components/NotFound.vue";
 import isUserLoggedIn from "./user_auth";
 import isCompanyLoggedIn from "./company_auth";
+import isAdminLoggedIn from "./admin_auth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,14 +31,40 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/about-us",
-      name: "about",
-      component: AboutView,
+      path: "/admin/users",
+      name: "admin.users",
+      component: Users,
+      beforeEnter: (to, from, next) => {
+        if (isAdminLoggedIn()) {
+          next();
+        } else {
+          next("/sign-in");
+        }
+      },
     },
     {
-      path: "/contact-us",
-      name: "contact",
-      component: ContactView,
+      path: "/admin/posts",
+      name: "admin.posts",
+      component: Posts,
+      beforeEnter: (to, from, next) => {
+        if (isAdminLoggedIn()) {
+          next();
+        } else {
+          next("/sign-in");
+        }
+      },
+    },
+    {
+      path: "/admin/offers",
+      name: "admin.offers",
+      component: Offers,
+      beforeEnter: (to, from, next) => {
+        if (isAdminLoggedIn()) {
+          next();
+        } else {
+          next("/sign-in");
+        }
+      },
     },
     {
       path: "/chat/:id",

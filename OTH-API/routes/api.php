@@ -35,7 +35,9 @@ Route::resource('posts', PostController::class);
 Route::resource('offers', OfferController::class);
 
 Route::post('posts/like', [PostController::class, 'like']);
+Route::post('posts/search', [PostController::class, 'search']);
 Route::post('offers/like', [OfferController::class, 'like']);
+Route::post('offers/search', [OfferController::class, 'search']);
 Route::get('users/{id}', [UserController::class, 'show']);
 Route::post('follow', [UserController::class, 'follow']);
 Route::post('skills/new', [UserController::class, 'newSkill']);
@@ -43,3 +45,5 @@ Route::post('apply', [UserController::class, 'apply']);
 Route::get('getSignature', [CloudinaryController::class, 'getsignature']);
 Route::get('company/{id}/applications', [UserController::class, 'companyApplications']);
 Route::get('user/{id}/applications', [UserController::class, 'userApplications']);
+Route::get('users', [UserController::class, 'users']);
+Route::delete('users/remove/{id}', [UserController::class, 'destroy']);

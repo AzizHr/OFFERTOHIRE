@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function users()
+    {
+        return response()->json(User::all());
+    }
+
     public function messages(Request $request, $user_id)
     {
         $sender_id = $request->sender_id;
@@ -102,5 +107,12 @@ class UserController extends Controller
     public function userApplications($user_id)
     {
         return response()->json(OfferApplication::with('offer' , 'offer.company')->where('user_id', $user_id)->get());
+    }
+
+    public function destroy($id)
+    {
+        $user = User::all()->find($id);
+        $user->delete();
+        return response()->json('User deleted successfully');
     }
 }

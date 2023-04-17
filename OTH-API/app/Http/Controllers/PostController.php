@@ -31,7 +31,7 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $path = 'C:/xampp/htdocs/OTH/OTH-UI/src/assets/posts';
+            $path = 'C:/xampp/htdocs/OFFERTOHIRE/OTH-UI/src/assets/posts';
             $filename = $image->getClientOriginalName();
             $image->move($path, $filename);
             $data['image'] = $filename;
@@ -39,6 +39,14 @@ class PostController extends Controller
 
         Post::create($data);
         return response()->json('Post created successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $posts = Post::where('content', 'like', '%' . $search . '%')->get();
+        return response()->json($posts);
     }
 
     public function like(Request $request)
@@ -57,5 +65,12 @@ class PostController extends Controller
             PostLike::create($data);
             return response()->json('Liked!');
         }
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::where('id' , $id);
+        $post->delete();
+        return response()->json('Post deleted successfully');
     }
 }

@@ -22,7 +22,7 @@ class RegisterController extends Controller
 
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
-            $path = 'C:/xampp/htdocs/OTH/OTH-UI/src/assets/users';
+            $path = 'C:/xampp/htdocs/OFFERTOHIRE/OTH-UI/src/assets/users';
             $filename = $image->getClientOriginalName();
             $image->move($path, $filename);
             $data['avatar'] = $filename;

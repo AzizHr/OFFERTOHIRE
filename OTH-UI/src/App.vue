@@ -16,7 +16,10 @@ export default {
         this.$route.name !== "companysignup" &&
         this.$route.name !== "signin" &&
         this.$route.name !== "notfound" &&
-        this.$route.name !== "portfolio"
+        this.$route.name !== "portfolio" &&
+        this.$route.name !== "admin.users" &&
+        this.$route.name !== "admin.posts" &&
+        this.$route.name !== "admin.offers"
       );
     },
   },
