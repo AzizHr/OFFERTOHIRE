@@ -56,8 +56,10 @@ export default {
     </div>
   </div>
   <div
-    class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-12 gap-x-6 justify-items-center mt-20 md:mx-8 mx-4"
+  v-if="offers.length"
+    class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-12 gap-x-6 justify-items-center mt-20 md:mx-8 mx-4 pb-20"
   >
     <Offer :offers="offers" />
   </div>
+  <div v-else class="text-center my-20">No Offers available</div>
 </template>

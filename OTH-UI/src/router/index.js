@@ -29,6 +29,13 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      beforeEnter: (to, from, next) => {
+        if (isUserLoggedIn() || isCompanyLoggedIn() || isAdminLoggedIn()) {
+          next("/posts");
+        } else {
+          next()
+        }
+      },
     },
     {
       path: "/admin/users",
@@ -83,7 +90,7 @@ const router = createRouter({
       name: "profile",
       component: ProfileView,
       beforeEnter: (to, from, next) => {
-        if (isUserLoggedIn()) {
+        if (isUserLoggedIn() || isCompanyLoggedIn()) {
           next();
         } else {
           next("/sign-in");
@@ -106,7 +113,7 @@ const router = createRouter({
       name: "newpost",
       component: NewPostView,
       beforeEnter: (to, from, next) => {
-        if (isUserLoggedIn()) {
+        if (isUserLoggedIn() || isCompanyLoggedIn()) {
           next();
         } else {
           next("/sign-in");

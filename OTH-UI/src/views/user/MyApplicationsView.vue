@@ -58,7 +58,6 @@ export default {
             <th scope="col" class="px-6 py-3">LETTER</th>
             <th scope="col" class="px-6 py-3">COMPANY NAME</th>
             <th scope="col" class="px-6 py-3">COMPANY EMAIL</th>
-            <th scope="col" class="px-6 py-3">CANCEL</th>
           </tr>
         </thead>
         <tbody class="text-gray-700">
@@ -70,11 +69,6 @@ export default {
             <td class="px-6 py-4">{{ my_application.letter }}</td>
             <td class="px-6 py-4">{{ my_application.offer.company.name }}</td>
             <td class="px-6 py-4">{{ my_application.offer.company.email }}</td>
-            <td class="px-6 py-4">
-              <button class="py-2 px-4 bg-orange-500 text-gray-100 font-bold rounded">
-                cancel
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>

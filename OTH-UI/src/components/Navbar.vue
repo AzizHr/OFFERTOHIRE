@@ -39,12 +39,6 @@ export default {
         <a href="/">Home</a>
       </li>
       <li>
-        <a href="/about-us">About Us</a>
-      </li>
-      <li>
-        <a href="/contact-us">Contact Us</a>
-      </li>
-      <li>
         <a href="/offers">Offers</a>
       </li>
       <li>
@@ -95,9 +89,10 @@ export default {
         >
       </li>
       <li>
-        <router-link :to="{ name: 'portfolio', params: { id: user.id } }"
+        <!-- <router-link :to="{ name: 'portfolio', params: { id: user.id } }"
           >Portfolio</router-link
-        >
+        > -->
+        <a href="/my-applications">My applications</a>
       </li>
       <li>
         <a href="/posts/new">New Post</a>

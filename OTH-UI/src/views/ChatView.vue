@@ -82,7 +82,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex mx-6 mt-10 gap-4">
+  <div class="flex mx-6 mt-10 gap-4 pb-10">
     <div class="lg:w-1/4 w-20 rounded border border-2 border-gray-300">
       <div class="bg-gray-100 py-2 px-2">Message</div>
       <div class="grid gap-2 px-2 mt-2">
@@ -95,7 +95,7 @@ export default {
             :to="{ name: 'chat', params: { id: follower.follower.id } }"
           >
             <img
-              :src="follower.follower.avatar"
+              :src="'../src/assets/users/' + follower.follower.avatar"
               class="bg-gray-300 w-10 h-10 rounded-full"
             />
           </router-link>
@@ -121,13 +121,13 @@ export default {
               {{ message.content }}
             </h1>
             <img
-              :src="message.sender.avatar"
+              :src="'../src/assets/users/' + message.sender.avatar"
               class="bg-gray-300 w-10 h-10 rounded-full"
             />
           </div>
           <div v-else class="flex items-center gap-2 mt-4">
             <img
-              :src="message.sender.avatar"
+              :src="'../src/assets/users/' + message.sender.avatar"
               class="bg-gray-300 w-10 h-10 rounded-full"
             />
             <h1 class="rounded-tr-xl bg-blue-500 px-2 py-2 w-fit">

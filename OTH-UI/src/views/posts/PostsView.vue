@@ -65,9 +65,9 @@ export default {
   </div>
   <div
     v-if="posts.length"
-    class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-y-10 md:gap-x-6 gap-x-4 justify-items-center mt-20 md:mx-8 mx-4"
+    class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-y-10 md:gap-x-6 gap-x-4 justify-items-center mt-20 md:mx-8 mx-4 mb-20"
   >
     <Post :posts="posts" />
   </div>
-  <div v-else class="text-center mt-20">No Posts available</div>
+  <div v-else class="text-center my-20">No Posts available</div>
 </template>

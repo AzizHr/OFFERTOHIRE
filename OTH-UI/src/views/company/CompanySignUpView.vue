@@ -1,49 +1,59 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+import router from "../../router";
 
 export default {
   setup() {
-    const name = ref("");
-    const avatar = ref("");
-    const email = ref("");
-    const password = ref("");
-    const password_confirmation = ref("");
+    const data = ref({
+      name: "",
+      avatar: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    });
 
     function onFileChange(event) {
-      avatar.value = event.target.files[0];
+      data.value.avatar = event.target.files[0];
     }
 
     async function register() {
-      let userData = {
-        name: name.value,
-        avatar: avatar.value,
-        email: email.value,
-        role: "company",
-        password: password.value,
-        password_confirmation: password_confirmation.value,
-      };
       if (
-        userData.name == "" &&
-        userData.avatar == "" &&
-        userData.email == "" &&
-        userData.password == "" &&
-        userData.password_confirmation == ""
+        data.value.name == "" &&
+        data.value.avatar == "" &&
+        data.value.email == "" &&
+        data.value.password == "" &&
+        data.value.password_confirmation == ""
       ) {
-      }
-      axios
-        .post("http://127.0.0.1:8000/api/register", userData)
-        .then((response) => {
-          console.log(response.data);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill all inputs!",
         });
+      }
+      let fr = new FormData();
+      fr.append("name", data.value.name);
+      fr.append("avatar", data.value.avatar);
+      fr.append("email", data.value.email);
+      fr.append("role", "company");
+      fr.append("password", data.value.password);
+      fr.append("password_confirmation", data.value.password_confirmation);
+      axios.post("http://127.0.0.1:8000/api/register", fr).then((response) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Account created successfully!',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        router.push("/sign-in");
+        // console.log(response.data);
+      });
     }
 
     return {
-      name,
-      avatar,
-      email,
-      password,
-      password_confirmation,
+      data,
       onFileChange,
       register,
     };
@@ -76,7 +86,7 @@ export default {
           type="text"
           placeholder="Enter your name"
           name="name"
-          v-model="name"
+          v-model="data.name"
         />
       </div>
       <div class="grid gap-1">
@@ -95,7 +105,7 @@ export default {
           type="email"
           placeholder="Enter your email"
           name="email"
-          v-model="email"
+          v-model="data.email"
         />
       </div>
       <div class="grid gap-1">
@@ -105,7 +115,7 @@ export default {
           type="password"
           placeholder="Enter your password"
           name="password"
-          v-model="password"
+          v-model="data.password"
         />
       </div>
       <div class="grid gap-1">
@@ -115,7 +125,7 @@ export default {
           type="password"
           placeholder="Confirm your password"
           name="password_confirmation"
-          v-model="password_confirmation"
+          v-model="data.password_confirmation"
         />
       </div>
       <div class="flex justify-between items-center">

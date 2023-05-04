@@ -5,13 +5,12 @@ export default {
 </script>
 
 <template>
-  <footer class="text-gray-50 bg-black pt-6 px-6 mt-20">
+  <footer class="text-gray-50 bg-black pt-6 px-6 mt-20 pb-6">
     <div
       class="md:flex grid md:grid-clos-3 grid-clos-1 justify-between lg:px-28 px-20 md:gap-4 gap-6"
     >
       <div>
         <div>
-          <img src="" alt="" />
           <h1 class="text-xl font-bold">
             OFFER-><span class="text-orange-500">HIRE</span>
           </h1>
@@ -37,5 +36,7 @@ export default {
         </ul>
       </div>
     </div>
+    <hr class="bg-gray-200 mt-6">
+    <p class="text-center mt-2 text-sm">2023 offertohire.com      All rights reserved</p>
   </footer>
 </template>

@@ -76,11 +76,11 @@ export default {
       >
         Hire Me
       </router-link>
-      <button
+      <!-- <button
         class="bg-gray-50 border border-2 border-black py-2.5 px-4 rounded font-bold text-black"
       >
         Download CV
-      </button>
+      </button> -->
     </div>
   </div>
 </template>

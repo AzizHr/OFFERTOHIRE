@@ -41,14 +41,26 @@ export default {
 </script>
 
 <template>
-  <div class="flex gap-10 px-20 mt-6">
+  <div class="flex gap-10 px-20 my-10">
     <div class="grid gap-2 w-1/2">
       <p class="text-sm text-gray-600">2023/05/01</p>
-      <img class="rounded w-full" :src="post.image" alt="" />
+      <img
+        class="rounded w-full"
+        :src="'../src/assets/posts/' + post.image"
+        alt=""
+      />
       <div class="flex justify-between">
         <div class="flex items-center gap-2">
-          <img class="w-12 h-12 rounded-full" :src="post.user.avatar" alt="" />
-          <p>{{ post.user.name }}</p>
+          <router-link :to="{ name: 'profile', params: { id: post.user.id } }">
+            <img
+              class="w-12 h-12 rounded-full"
+              :src="'../src/assets/users/' + post.user.avatar"
+              alt=""
+            />
+          </router-link>
+          <router-link :to="{ name: 'profile', params: { id: post.user.id } }">
+            {{ post.user.name }}
+          </router-link>
         </div>
         <router-link
           :to="{ name: 'profile', params: { id: post.user.id } }"
@@ -60,7 +72,7 @@ export default {
     </div>
     <div class="grid mt-20 w-1/3">
       <p class="text-xl">
-        {{ post.body }}
+        {{ post.content }}
       </p>
     </div>
   </div>

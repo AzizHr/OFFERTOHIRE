@@ -1,6 +1,8 @@
 <script>
 import axios from "axios";
 import { ref } from "vue";
+import router from '../../router';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -29,6 +31,14 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
+          Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Posted successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        router.push("/offers");
         })
         .catch((error) => {
           console.log(error.message);
@@ -42,7 +52,7 @@ export default {
 
 <template>
   <div
-    class="md:w-1/2 w-auto md:mx-auto mx-4 grid gap-8 mt-20 rounded shadow-md md:py-10 py-4 md:px-6 px-2"
+    class="md:w-1/2 w-auto md:mx-auto mx-4 grid gap-8 mt-20 rounded shadow-md md:py-10 py-4 md:px-6 px-2 mb-20"
   >
     <h1 class="text-2xl font-bold">Publish a new offer</h1>
     <div class="grid gap-4">

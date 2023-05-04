@@ -67,7 +67,7 @@
     <h1 class="font-bold ml-20 mt-20 text-xl">A company offer</h1>
 
     <div
-      class="md:ml-20 mt-10 grid gap-y-8 md:w-1/2 w-auto rounded shadow-md md:px-2 px-3 md:py-2 py-3 md:mx-0 mx-2 hover:bg-gray-100"
+      class="md:ml-20 mt-10 grid gap-y-8 md:w-1/2 w-auto rounded shadow-md md:px-2 px-3 md:py-2 py-3 md:mx-0 mx-2 hover:bg-gray-100 mb-10"
     >
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-2">

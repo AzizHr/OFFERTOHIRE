@@ -22,7 +22,13 @@ export default {
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         console.log(response.data.user);
-        router.push('/')
+        if(response.data.user.role == 'admin')
+        {
+          router.push('/admin/users')
+        } else {
+          router.push('/posts')
+        }
+        
       } catch (error) {
         console.error(error);
       }

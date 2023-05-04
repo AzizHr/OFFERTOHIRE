@@ -75,7 +75,7 @@ export default {
           <div
             class="bg-white rounded-full h-32 w-32 absolute mt-28 ml-6 flex justify-center items-center"
           >
-            <div class="bg-red-500 h-28 w-28 rounded-full"></div>
+            <img class="h-28 w-28 rounded-full" :src="'../../src/assets/users/' + targetedUser.avatar" />
           </div>
         </div>
         <div class="grid mt-20 gap-4 ml-10">
@@ -106,7 +106,7 @@ export default {
               Following
             </button>
             <button
-              v-else
+            v-else-if="targetedUser.id !== user.id"
               @click="follow(targetedUser.id, user.id)"
               class="py-2 px-4 text-gray-50 bg-blue-500 font-bold rounded"
             >
@@ -115,7 +115,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="shadow-md w-auto rounded-lg h-fit grid gap-4 px-2 py-2">
+      <div class="shadow-md w-auto rounded-lg h-fit grid gap-4 px-2 py-2 mb-10">
         <h1 class="font-bold">Skills</h1>
         <div v-if="targetedUser.skills && targetedUser.skills.length === 0">
           You have no skills yet
@@ -126,7 +126,7 @@ export default {
           <div
             v-for="skill in targetedUser.skills"
             :key="skill.id"
-            class="py-2 px-2 rounded border border-1 border-gray-400"
+            class="py-2 px-2 w-fit rounded border border-1 border-gray-400"
           >
             {{ skill.content }}
           </div>
@@ -144,7 +144,7 @@ export default {
       >
         <img
           class="md:w-10 md:h-10 w-8 h-8 rounded-full"
-          :src="follower.follower.avatar"
+          :src="'../../src/assets/users/' + follower.follower.avatar"
           alt=""
         />
         <router-link

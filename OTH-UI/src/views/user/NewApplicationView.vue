@@ -2,6 +2,8 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import Swal from 'sweetalert2';
+import router from '../../router';
 
 export default {
   setup() {
@@ -24,6 +26,14 @@ export default {
         .post("http://127.0.0.1:8000/api/apply", formData)
         .then((response) => {
           console.log(response.data);
+          Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Application sent successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        router.push("/offers");
         })
         .catch((error) => {
           console.log(error.message);
@@ -37,7 +47,7 @@ export default {
 
 <template>
   <div
-    class="md:w-2/3 w-auto md:mx-auto mx-4 grid gap-8 mt-20 rounded shadow-md md:py-10 py-4 md:px-6 px-2"
+    class="md:w-2/3 w-auto md:mx-auto mx-4 grid gap-8 mt-20 rounded shadow-md md:py-10 py-4 md:px-6 px-2 mb-20"
   >
     <h1 class="text-2xl font-bold">Submit an application to this offer</h1>
     <div class="grid gap-4">
